@@ -11,18 +11,12 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  GenerateStadiumLocations:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: lambda_functions/generate_stadium_locations
       Handler: app.lambda_handler
       Runtime: python3.8
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
