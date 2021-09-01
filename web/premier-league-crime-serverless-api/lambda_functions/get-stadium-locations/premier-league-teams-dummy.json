@@ -1,0 +1,162 @@
+[
+    {
+        "id": 57,
+        "crestUrl": "https://crests.football-data.org/57.svg",
+        "fullAddress": "75 Drayton Park London N5 1BU",
+        "postCode": "N5 1BU",
+        "longitude": -0.106371,
+        "latitude": 51.556667
+    },
+    {
+        "id": 58,
+        "crestUrl": "https://crests.football-data.org/58.svg",
+        "fullAddress": "Villa Park Birmingham B6 6HE",
+        "postCode": "B6 6HE",
+        "longitude": -1.884946,
+        "latitude": 52.508486
+    },
+    {
+        "id": 61,
+        "crestUrl": "https://crests.football-data.org/61.svg",
+        "fullAddress": "Fulham Road London SW6 1HS",
+        "postCode": "SW6 1HS",
+        "longitude": -0.190297,
+        "latitude": 51.481124
+    },
+    {
+        "id": 62,
+        "crestUrl": "https://crests.football-data.org/62.svg",
+        "fullAddress": "Goodison Park Liverpool L4 4EL",
+        "postCode": "L4 4EL",
+        "longitude": -2.967017,
+        "latitude": 53.439197
+    },
+    {
+        "id": 64,
+        "crestUrl": "https://crests.football-data.org/64.svg",
+        "fullAddress": "Anfield Road Liverpool L4 0TH",
+        "postCode": "L4 0TH",
+        "longitude": -2.961584,
+        "latitude": 53.431267
+    },
+    {
+        "id": 65,
+        "crestUrl": "https://crests.football-data.org/65.svg",
+        "fullAddress": "SportCity Manchester M11 3FF",
+        "postCode": "M11 3FF",
+        "longitude": -2.202812,
+        "latitude": 53.484206
+    },
+    {
+        "id": 66,
+        "crestUrl": "https://crests.football-data.org/66.svg",
+        "fullAddress": "Sir Matt Busby Way Manchester M16 0RA",
+        "postCode": "M16 0RA",
+        "longitude": -2.291032,
+        "latitude": 53.462559
+    },
+    {
+        "id": 67,
+        "crestUrl": "https://crests.football-data.org/67.svg",
+        "fullAddress": "Sports Direct Arena Newcastle upon Tyne NE1 4ST",
+        "postCode": "NE1 4ST",
+        "longitude": -1.622324,
+        "latitude": 54.975219
+    },
+    {
+        "id": 68,
+        "crestUrl": "https://upload.wikimedia.org/wikipedia/en/8/8c/Norwich_City.svg",
+        "fullAddress": "Carrow Road Norwich NR1 1JE",
+        "postCode": "NR1 1JE",
+        "longitude": 1.308603,
+        "latitude": 52.62238
+    },
+    {
+        "id": 73,
+        "crestUrl": "https://crests.football-data.org/73.svg",
+        "fullAddress": "Bill Nicholson Way, 748 High Road London N17 0AP",
+        "postCode": "N17 0AP",
+        "longitude": -0.065778,
+        "latitude": 51.603307
+    },
+    {
+        "id": 76,
+        "crestUrl": "https://crests.football-data.org/76.svg",
+        "fullAddress": "Waterloo Road Wolverhampton WV1 4QR",
+        "postCode": "WV1 4QR",
+        "longitude": -2.131226,
+        "latitude": 52.590195
+    },
+    {
+        "id": 328,
+        "crestUrl": "https://crests.football-data.org/328.svg",
+        "fullAddress": "Harry Potts Way Burnley BB10 4BX",
+        "postCode": "BB10 4BX",
+        "longitude": -2.230325,
+        "latitude": 53.78847
+    },
+    {
+        "id": 338,
+        "crestUrl": "https://crests.football-data.org/338.svg",
+        "fullAddress": "The Walkers Stadium, Filbert Way Leicester LE2 7FL",
+        "postCode": "LE2 7FL",
+        "longitude": -1.1415,
+        "latitude": 52.620044
+    },
+    {
+        "id": 340,
+        "crestUrl": "https://crests.football-data.org/340.svg",
+        "fullAddress": "Britannia Road Southampton SO14 5FP",
+        "postCode": "SO14 5FP",
+        "longitude": -1.390823,
+        "latitude": 50.90653
+    },
+    {
+        "id": 341,
+        "crestUrl": "https://crests.football-data.org/341.svg",
+        "fullAddress": "Elland Road Leeds LS11 0ES",
+        "postCode": "LS11 0ES",
+        "longitude": -1.573104,
+        "latitude": 53.777714
+    },
+    {
+        "id": 346,
+        "crestUrl": "https://crests.football-data.org/346.svg",
+        "fullAddress": "Vicarage Road Watford WD18 0ER",
+        "postCode": "WD18 0ER",
+        "longitude": -0.400727,
+        "latitude": 51.649275
+    },
+    {
+        "id": 354,
+        "crestUrl": "https://crests.football-data.org/354.svg",
+        "fullAddress": "Whitehorse Lane London SE25 6PU",
+        "postCode": "SE25 6PU",
+        "longitude": -0.085923,
+        "latitude": 51.397894
+    },
+    {
+        "id": 397,
+        "crestUrl": "https://crests.football-data.org/397.svg",
+        "fullAddress": "44 North Road Brighton & Hove BN1 1YR",
+        "postCode": "BN1 1YR",
+        "longitude": -0.141607,
+        "latitude": 50.825783
+    },
+    {
+        "id": 402,
+        "crestUrl": "https://crests.football-data.org/402.svg",
+        "fullAddress": "Braemar Road Brentford TW8 0NT",
+        "postCode": "TW8 0NT",
+        "longitude": -0.302557,
+        "latitude": 51.487731
+    },
+    {
+        "id": 563,
+        "crestUrl": "https://crests.football-data.org/563.svg",
+        "fullAddress": "Queen Elizabeth Olympic Park, London London E20 2ST",
+        "postCode": "E20 2ST",
+        "longitude": -0.016403,
+        "latitude": 51.538636
+    }
+]

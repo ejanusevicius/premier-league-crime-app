@@ -1,6 +1,7 @@
-from layers.api_interfaces.FootbalDataApi import FootballDataApi
-from layers.aws_interfaces.DynamoDB import DynamoDB
-from layers.api_interfaces.PostcodeApi import PostCodeApi
+from FootbalDataApi import FootballDataApi
+from DynamoDB import DynamoDB
+from PostcodeApi import PostCodeApi
+import json
 
 def lambda_handler(event, context):
 
@@ -37,8 +38,8 @@ def create_dynamodb_object_from_team_data(team):
         "crestUrl": team["crestUrl"],
         "fullAddress": team["address"],
         "postCode": post_code,
-        "longitude": longitude,
-        "latitude": latitute
+        "longitude": str(longitude),
+        "latitude": str(latitute)
     }
 
     return parsed_location_dict

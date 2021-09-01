@@ -14,7 +14,7 @@ import os
 #         assert output_data["longitude"] is not None
 #         assert output_data["latitude"] is not None
 
-@mock.patch.dict(os.environ, {"API_KEY": "aee7452b2ba84dadb02437d4f90271c4"})
-def test_if_endpoint_works():
-    locations = lambda_handler({}, "")
-    assert len(locations) > 1
+# @mock.patch.dict(os.environ, {"API_KEY": "aee7452b2ba84dadb02437d4f90271c4"})
+# def test_if_endpoint_works():
+#     locations = lambda_handler({}, "")
+#     assert len(locations) > 1
