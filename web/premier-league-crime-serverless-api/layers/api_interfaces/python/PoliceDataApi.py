@@ -1,6 +1,11 @@
-from dataclasses import astuple
-from PoliceDataApiTypes import CrimeRequestConfig
+from dataclasses import astuple, dataclass
 import requests
+
+@dataclass
+class CrimeRequestConfig: # Input Variables for "get_crimes_for_date_range_and_coordinates
+    date: str 
+    longitude: float
+    latitude: float
 
 class PoliceDataApi:
 

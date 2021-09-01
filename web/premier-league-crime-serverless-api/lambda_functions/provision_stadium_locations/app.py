@@ -19,7 +19,6 @@ def lambda_handler(event, context):
     dynamodb.write_locations_to_location_table(list_of_locations)
 
 
-
 def map_team_data_to_dynamodb_objects(list_of_teams):
     dynamodb_objects = []
     for team in list_of_teams:

@@ -1,4 +1,4 @@
-from layers.api_interfaces.PostcodeApi import PostCodeApi
+from layers.api_interfaces.python.PostcodeApi import PostCodeApi
 from pytest import mark
 
 def test_if_longitude_and_latitude_is_fetched():

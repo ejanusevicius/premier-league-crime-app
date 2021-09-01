@@ -11,7 +11,6 @@ class Location: # Type for the location dict
     longitude: str
     latitude: str
 
-
 class DynamoDB:
 
     def __init__(self) -> None:

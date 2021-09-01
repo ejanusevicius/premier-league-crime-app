@@ -1,5 +1,5 @@
 from pytest import mark
-from layers.api_interfaces.FootbalDataApi import FootballDataApi
+from layers.api_interfaces.python.FootbalDataApi import FootballDataApi
 from unittest import mock
 import os
 

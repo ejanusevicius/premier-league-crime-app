@@ -36,7 +36,7 @@ Resources:
   GenerateStadiumLocations:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: lambda_functions/generate-stadium-locations
+      CodeUri: lambda_functions/provision_stadium_locations
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 300
@@ -47,7 +47,7 @@ Resources:
   GetListOfStadiums:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: lambda_functions/get-list-of-stadiums
+      CodeUri: lambda_functions/get_list_of_stadiums
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 30
@@ -59,7 +59,7 @@ Resources:
   GetCrimesForStadium:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: lambda_functions/get-crimes-for-stadium
+      CodeUri: lambda_functions/get_crimes_for_stadium
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 30

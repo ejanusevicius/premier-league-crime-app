@@ -1,5 +1,6 @@
 from dataclasses import dataclass, astuple
 import json
+from typing import Any
 
 @dataclass
 class ResponseObject:
@@ -8,7 +9,7 @@ class ResponseObject:
     """
     status_code: int
     message: str
-    body = None
+    body: Any = None
 
 class ResponseUtilities:
     def create_response_object(response_object: ResponseObject):

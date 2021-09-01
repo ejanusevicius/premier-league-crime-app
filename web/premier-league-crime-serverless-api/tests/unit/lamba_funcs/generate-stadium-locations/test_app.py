@@ -1,7 +1,7 @@
-import json
-from lambda_functions.generate_stadium_locations.app import create_dynamodb_object_from_team_data, lambda_handler
-from unittest import mock
-import os
+# import json
+# from lambda_functions.generate_stadium_locations.app import create_dynamodb_object_from_team_data, lambda_handler
+# from unittest import mock
+# import os
 # def test_if_team_data_is_parsed_correctly():
 #     with open('/football_api_response.json') as data_file:
 #         input_data = json.load(data_file)
