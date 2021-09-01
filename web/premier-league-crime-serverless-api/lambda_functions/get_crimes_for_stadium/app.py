@@ -19,10 +19,10 @@ def lambda_handler(event, context):
             longitude -> float
             latitude -> float
     """
-    
-    longitude = 53.777714
-    latitude = -1.573102
-    
+    query_parameters = event["queryStringParameters"]
+    longitude = query_parameters['longitude']
+    latitude = query_parameters['latitude']
+
     list_of_crimes = get_crimes_for_date_range_and_coordinates(
         CrimeRequestConfigForRange(
             list_of_dates=DateNavigator.get_list_of_date_query_strings_for_last_year(), # returns list of dates as type -> List['YYYY-MM']
