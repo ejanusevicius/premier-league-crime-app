@@ -16,6 +16,7 @@ variable "aws_secret_key" {
 # Backend configuration
 variable "backend_bucket_name" {
     type = string
+    default = "premier-league-crime-app-backend"
 }
 
 
@@ -29,16 +30,20 @@ variable "api_lambda_functions" {
     ]
 }
 
+variable "lambda_invoke_url" {
+    default = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions"
+}
+
 
 # dynamoDB
 variable "dynamodb_stadium_table_name" {
     type = string
-    default "${local.application_name}-stadiums"
+    default = "premier-league-crime-app-stadiums"
 }
 
 
 # AWS SAM
 variable "sam_bucket_name" {
     type = string
-    default
+    default = "premier-league-crime-app-sam-template"
 }

@@ -1,8 +1,8 @@
 terraform {
     backend "s3" {
-        bucket = "${var.backend_bucket_name}"
-        key = "${local.application_name}-state.tfstate"
-        region = "${var.aws_region}"
+        bucket = "premier-league-crime-app-backend"
+        key = "premier-league-crime-app-state.tfstate"
+        region = "eu-west-2"
         encrypt = "true"
     }
 }

@@ -5,3 +5,7 @@ web/premier-league-crime-serverless-api/generate-stadium-locations/node_modules
 
 # Exclude build (for front-end)
 web/premier-league-crime-react-app/build
+
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfvars
