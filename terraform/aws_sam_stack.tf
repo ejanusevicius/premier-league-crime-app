@@ -23,5 +23,5 @@ resource "aws_cloudformation_stack" "premier_league_crime_api_sam_stack" {
         AppName = local.application_name
     }
 
-    template_url = "https://${var.sam_bucket_name}.s3-${var.aws_region}.amazonaws.com/${aws_s3_bucket_object.sam_template.id}"
+    template_url = "https://${var.sam_bucket_name}.s3-${var.aws_region}.amazonaws.com/${aws_s3_bucket_object.sam_template_object.id}"
 } 

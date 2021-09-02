@@ -12,7 +12,7 @@ resource "aws_iam_policy" "lambda_permissions_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_permissions_policy_attach" {
-    role = aws_iam_role.apigateway_execution_role.name
+    role = aws_iam_role.api_gateway_execution_role.name
     policy_arn = aws_iam_policy.lambda_permissions_policy.arn
 }
 
@@ -25,7 +25,7 @@ resource "aws_api_gateway_rest_api" "premier_league_crime_rest_api" {
     
     body = templatefile("./api_definitions.yaml", {
         app_name = local.application_name,
-        api_gateway_execution_role = aws_iam_role_apigateway_execution_role.arn
+        api_gateway_execution_role = aws_iam_role.api_gateway_execution_role.arn
         get_list_of_stadiums_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-list-of-stadiums"].value}"
         get_crimes_for_stadium_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-crimes-for-stadium"].value}" 
     })
