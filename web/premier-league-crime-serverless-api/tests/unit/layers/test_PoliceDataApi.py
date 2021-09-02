@@ -6,7 +6,7 @@ def test_if_crime_data_is_retrieved():
         CrimeRequestConfig(
             date="2020-11",
             longitude=-1.573102,
-            latitute=53.777714
+            latitude=53.777714
         )
     )
 

@@ -30,7 +30,7 @@ def map_team_data_to_dynamodb_objects(list_of_teams):
 
 def create_dynamodb_object_from_team_data(team):
     post_code = parse_postcode_from_address(team['address'])
-    longitude, latitute = PostCodeApi.get_coordinates_for_post_code(post_code)
+    longitude, latitude = PostCodeApi.get_coordinates_for_post_code(post_code)
 
     parsed_location_dict = {
         "id": team["id"],
@@ -38,7 +38,7 @@ def create_dynamodb_object_from_team_data(team):
         "fullAddress": team["address"],
         "postCode": post_code,
         "longitude": str(longitude),
-        "latitude": str(latitute)
+        "latitude": str(latitude)
     }
 
     return parsed_location_dict

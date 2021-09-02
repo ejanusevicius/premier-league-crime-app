@@ -9,7 +9,7 @@
 #         CrimeRequestConfigForRange(
 #             list_of_dates=DateNavigator.get_list_of_date_query_strings_for_last_year(), # returns list of dates as type -> List['YYYY-MM']
 #             longitude=longitude,
-#             latitute=latitude
+#             latitude=latitude
 #         )
 #     )
 

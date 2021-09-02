@@ -9,7 +9,7 @@ from dataclasses import dataclass, astuple
 class CrimeRequestConfigForRange:
     list_of_dates: List[str] 
     longitude: float
-    latitute: float
+    latitude: float
 
 def lambda_handler(event, context):
 
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
         CrimeRequestConfigForRange(
             list_of_dates=DateNavigator.get_list_of_date_query_strings_for_last_year(), # returns list of dates as type -> List['YYYY-MM']
             longitude=longitude,
-            latitute=latitude
+            latitude=latitude
         )
     )
 
@@ -50,8 +50,8 @@ def get_crimes_for_date_range_and_coordinates(config: CrimeRequestConfigForRange
         crimes_for_single_month = PoliceDataApi.get_crimes_for_date_and_coordinates(
             CrimeRequestConfig(
                 date=date,
-                latitude=longitude,
-                longitude=latitude
+                latitude=latitude,
+                longitude=longitude
             )
         )
         cleaned_up_crime_data = clean_up_raw_crime_data(crimes_for_single_month)

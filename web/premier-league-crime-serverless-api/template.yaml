@@ -3,7 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   AWS SAM template for the "Premier League Crime" serverless back-end.
 
-
 Globals:
   Function:
     Timeout: 30
@@ -50,7 +49,7 @@ Resources:
       CodeUri: lambda_functions/get_list_of_stadiums
       Handler: app.lambda_handler
       Runtime: python3.8
-      Timeout: 30
+      Timeout: 10
       Layers:
         - !Ref AWSInterfaces
         - !Ref ApiInterfaces
@@ -71,13 +70,4 @@ Resources:
         Variables: 
           API_KEY: "aee7452b2ba84dadb02437d4f90271c4"
 
-Outputs:
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+# Outputs:

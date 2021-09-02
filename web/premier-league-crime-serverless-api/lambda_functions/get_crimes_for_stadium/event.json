@@ -6,8 +6,8 @@
     "isBase64Encoded": false,
     "queryStringParameters": {
       "foo": "bar",
-      "longitude": 53.777714,
-      "latitude": -1.573102
+      "longitude": -1.573102,
+      "latitude": 53.777714
     },
     "pathParameters": {
       "proxy": "/path/to/resource"
