@@ -1,0 +1,13 @@
+1) Create S3 buckets for Terraform backend & SAM package artifacts
+aws s3api create-bucket --bucket premier-league-crime-app-backend --region eu-west-2 --create-bucket-configuration LocationConstraint=eu-west-2
+aws s3api create-bucket --bucket premier-league-crime-app-sam-template --region eu-west-2 --create-bucket-configuration LocationConstraint=eu-west-2
+
+
+
+2) Package the AWS SAM ouputs & Upload them to S3 bucket
+sam package --output-template-file sam-deploy.yaml --s3-bucket premier-league-crime-app-sam-template
+
+
+
+3) Run Terraform
+terraform apply -auto-approve

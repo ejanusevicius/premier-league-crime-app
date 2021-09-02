@@ -3,11 +3,51 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   AWS SAM template for the "Premier League Crime" serverless back-end.
 
+
+Parameters:
+  AppName:
+    Type: String
+    Description: Application Name. Used to distinguish resources
+  FootballApiKey:
+    Type: String
+    Description: API Key for the Football Data API.
+
+    
 Globals:
   Function:
     Timeout: 30
 
 Resources:
+
+  CloudWatchAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AppName}-lambda-cloudwatch-access-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: '/'
+      Policies:
+        - PolicyName: cloudwatch
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                  - logs:PutLogEvents
+                Resource:
+                  - '*'
+
   AWSInterfaces:
     Type: AWS::Serverless::LayerVersion
     Properties:
@@ -27,14 +67,15 @@ Resources:
   CodeUtilities:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: API_Service_Interfaces
+      LayerName: Code_Utilities
       ContentUri: layers/code_utilities
       CompatibleRuntimes:
         - python3.8
 
-  GenerateStadiumLocations:
+  ProvisionStadiumLocations:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${AppName}-provision-stadium-locations"
       CodeUri: lambda_functions/provision_stadium_locations
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -42,10 +83,13 @@ Resources:
       Layers:
         - !Ref AWSInterfaces
         - !Ref ApiInterfaces
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
 
   GetListOfStadiums:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${AppName}-get-list-of-stadiums"
       CodeUri: lambda_functions/get_list_of_stadiums
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -54,10 +98,13 @@ Resources:
         - !Ref AWSInterfaces
         - !Ref ApiInterfaces
         - !Ref CodeUtilities
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
 
   GetCrimesForStadium:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${AppName}-get-crimes-for-stadium"
       CodeUri: lambda_functions/get_crimes_for_stadium
       Handler: app.lambda_handler
       Runtime: python3.8
@@ -66,8 +113,26 @@ Resources:
         - !Ref AWSInterfaces
         - !Ref ApiInterfaces
         - !Ref CodeUtilities
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
       Environment:
         Variables: 
-          API_KEY: "aee7452b2ba84dadb02437d4f90271c4"
+          API_KEY: !Ref FootballApiKey
 
-# Outputs:
+
+Outputs:
+  ProvisionStadiumLocations:
+    Description: ARN of Get Data Lambda Function
+    Value: !GetAtt ProvisionStadiumLocations.Arn
+    Export:
+      Name: !Sub '${AppName}-provision-stadium-locations-arn'
+  GetListOfStadiums:
+    Description: ARN of Get Data Lambda Function
+    Value: !GetAtt GetListOfStadiums.Arn
+    Export:
+      Name: !Sub '${AppName}-get-list-of-stadiums-arn'
+  GetCrimesForStadium:
+    Description: ARN of Get Data Lambda Function
+    Value: !GetAtt GetCrimesForStadium.Arn
+    Export:
+      Name: !Sub '${AppName}-get-crimes-for-stadium-arn'

@@ -12,14 +12,6 @@ variable "aws_secret_key" {
     type = string
 }
 
-
-# Backend configuration
-variable "backend_bucket_name" {
-    type = string
-    default = "premier-league-crime-app-backend"
-}
-
-
 # Lambda functions
 variable "api_lambda_functions" {
     type = list

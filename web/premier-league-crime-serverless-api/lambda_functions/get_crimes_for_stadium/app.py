@@ -42,6 +42,7 @@ def lambda_handler(event, context):
         )
     )
 
+
 def get_crimes_for_date_range_and_coordinates(config: CrimeRequestConfigForRange):
     list_of_dates, longitude, latitude = astuple(config)
     list_of_crimes_for_location = []

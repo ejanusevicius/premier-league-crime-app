@@ -1,11 +1,11 @@
-# Exclude dependencies
-web/premier-league-crime-react-app/node_modules
-web/premier-league-crime-serverless-api/node_modules
-web/premier-league-crime-serverless-api/generate-stadium-locations/node_modules
-
-# Exclude build (for front-end)
+# Front-End
 web/premier-league-crime-react-app/build
+web/premier-league-crime-react-app/node_modules
 
+# Back-End
+web/premier-league-crime-serverless-api/.aws-sam
+
+# Terraform
 terraform/.terraform
 terraform/.terraform.lock.hcl
 terraform/terraform.tfvars

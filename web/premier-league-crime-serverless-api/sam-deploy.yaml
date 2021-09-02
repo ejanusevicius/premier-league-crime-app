@@ -1,0 +1,142 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'AWS SAM template for the "Premier League Crime" serverless back-end.
+
+  '
+Parameters:
+  AppName:
+    Type: String
+    Description: Application Name. Used to distinguish resources
+  FootballApiKey:
+    Type: String
+    Description: API Key for the Football Data API.
+Globals:
+  Function:
+    Timeout: 30
+Resources:
+  CloudWatchAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: ${AppName}-lambda-cloudwatch-access-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: /
+      Policies:
+      - PolicyName: cloudwatch
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:DescribeLogGroups
+            - logs:DescribeLogStreams
+            - logs:PutLogEvents
+            Resource:
+            - '*'
+  AWSInterfaces:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: AWS_Service_Interfaces
+      ContentUri: s3://premier-league-crime-app-sam-template/aa5d66db8fc6adb6f48b397df81ee4a3
+      CompatibleRuntimes:
+      - python3.8
+  ApiInterfaces:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: API_Service_Interfaces
+      ContentUri: s3://premier-league-crime-app-sam-template/b1fc39e09697f4472d491e90aa6cf64a
+      CompatibleRuntimes:
+      - python3.8
+  CodeUtilities:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: Code_Utilities
+      ContentUri: s3://premier-league-crime-app-sam-template/f2e91366f6d2413fd04581ac4874ecc4
+      CompatibleRuntimes:
+      - python3.8
+  ProvisionStadiumLocations:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AppName}-provision-stadium-locations
+      CodeUri: s3://premier-league-crime-app-sam-template/12bab7a65ac20403d536dd476bc979e1
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Timeout: 300
+      Layers:
+      - Ref: AWSInterfaces
+      - Ref: ApiInterfaces
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
+  GetListOfStadiums:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AppName}-get-list-of-stadiums
+      CodeUri: s3://premier-league-crime-app-sam-template/bea1b9bb8a045791073bfd37669d328c
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Timeout: 10
+      Layers:
+      - Ref: AWSInterfaces
+      - Ref: ApiInterfaces
+      - Ref: CodeUtilities
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
+  GetCrimesForStadium:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${AppName}-get-crimes-for-stadium
+      CodeUri: s3://premier-league-crime-app-sam-template/99740f97c00cb89565649c10f0053f7e
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Timeout: 30
+      Layers:
+      - Ref: AWSInterfaces
+      - Ref: ApiInterfaces
+      - Ref: CodeUtilities
+      Role:
+        Fn::GetAtt: CloudWatchAccessRole.Arn
+      Environment:
+        Variables:
+          API_KEY:
+            Ref: FootballApiKey
+Outputs:
+  ProvisionStadiumLocations:
+    Description: ARN of Get Data Lambda Function
+    Value:
+      Fn::GetAtt:
+      - ProvisionStadiumLocations
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: ${AppName}-provision-stadium-locations-arn
+  GetListOfStadiums:
+    Description: ARN of Get Data Lambda Function
+    Value:
+      Fn::GetAtt:
+      - GetListOfStadiums
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: ${AppName}-get-list-of-stadiums-arn
+  GetCrimesForStadium:
+    Description: ARN of Get Data Lambda Function
+    Value:
+      Fn::GetAtt:
+      - GetCrimesForStadium
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: ${AppName}-get-crimes-for-stadium-arn

@@ -26,8 +26,8 @@ resource "aws_api_gateway_rest_api" "premier_league_crime_rest_api" {
     body = templatefile("./api_definitions.yaml", {
         app_name = local.application_name,
         api_gateway_execution_role = aws_iam_role.api_gateway_execution_role.arn
-        get_list_of_stadiums_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-list-of-stadiums"].value}"
-        get_crimes_for_stadium_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-crimes-for-stadium"].value}" 
+        get_list_of_stadiums_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-list-of-stadiums"].value}/invocations"
+        get_crimes_for_stadium_uri = "${var.lambda_invoke_url}/${data.aws_cloudformation_export.api_lambda_arn_cfn_exports["get-crimes-for-stadium"].value}/invocations" 
     })
 }
 

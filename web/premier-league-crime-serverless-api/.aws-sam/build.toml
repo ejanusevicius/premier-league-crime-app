@@ -6,7 +6,7 @@ codeuri = "C:\\AND_Digital_Test\\web\\premier-league-crime-serverless-api\\lambd
 runtime = "python3.8"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["GenerateStadiumLocations"]
+functions = ["ProvisionStadiumLocations"]
 
 [function_build_definitions.eb2c9678-3fa8-4c6f-b02b-214f0b662b31]
 codeuri = "C:\\AND_Digital_Test\\web\\premier-league-crime-serverless-api\\lambda_functions\\get_list_of_stadiums"

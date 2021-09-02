@@ -1,32 +1,12 @@
 openapi: 3.0.1
 paths:
   '/get-list-of-stadiums':
-    post:
-      responses:
-        '200':
-          description: 200 response
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/schemas/APIResponse'
-      # security:
-      #   - ApiKeyAuth: []
+    get:
       x-amazon-apigateway-integration:
+        type: aws_proxy
         credentials: '${api_gateway_execution_role}'
         uri: '${get_list_of_stadiums_uri}'
-        responses:
-          default:
-            statusCode: '200'
-            responseParameters:
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        passthroughBehavior: when_no_match
         httpMethod: POST
-        contentHandling: CONVERT_TO_TEXT
-        type: aws
     options:
       responses:
         '200':
@@ -50,7 +30,7 @@ paths:
           default:
             statusCode: '200'
             responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,GET'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
         passthroughBehavior: when_no_match
@@ -58,30 +38,12 @@ paths:
           application/json: '{"statusCode": 200}'
         type: mock
   '/get-crimes-for-stadium':
-    post:
-      responses:
-        '200':
-          description: 200 response
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                '$ref': '#/components/schemas/APIResponse'
+    get:
       x-amazon-apigateway-integration:
+        type: aws_proxy
         credentials: '${api_gateway_execution_role}'
         uri: '${get_crimes_for_stadium_uri}'
-        responses:
-          default:
-            statusCode: '200'
-            responseParameters:
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        passthroughBehavior: when_no_match
         httpMethod: POST
-        contentHandling: CONVERT_TO_TEXT
-        type: aws
     options:
       responses:
         '200':
@@ -105,7 +67,7 @@ paths:
           default:
             statusCode: '200'
             responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,GET'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
         passthroughBehavior: when_no_match
