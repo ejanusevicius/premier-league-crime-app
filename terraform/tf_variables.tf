@@ -12,14 +12,19 @@ variable "aws_secret_key" {
     type = string
 }
 
-# Lambda functions
+# Lambda functions (API)
 variable "api_lambda_functions" {
     type = list
     default = [
         "get-list-of-stadiums",
-        "get-crimes-for-stadium",
-        "provision-stadium-locations"
+        "get-crimes-for-stadium"
     ]
+}
+
+# Lambda functions (Provisioning)
+variable "stadium_provisioning_lambda" {
+    type = string
+    default = "provision-stadium-locations"
 }
 
 variable "lambda_invoke_url" {

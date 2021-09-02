@@ -5,6 +5,11 @@ data "aws_cloudformation_export" "api_lambda_arn_cfn_exports" {
     name = "${local.application_name}-${each.value}-arn"
 }
 
+data "aws_cloudformation_export" "provisioning_lambda_name" {
+    # TODO: Implement code that will extract the exported lambda function name from the CloudFront stack.
+    # This will then be passed into the function invocation to populate the dynamoDB table.
+}
+
 # Create API Gateway Trust Policy
 data "aws_iam_policy_document" "apigateway_trust_policy"  {
     statement {
