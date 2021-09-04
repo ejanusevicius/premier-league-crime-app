@@ -121,17 +121,25 @@ Resources:
 
 
 Outputs:
-  ProvisionStadiumLocations:
+  ProvisionStadiumLocationsArn:
     Description: ARN of Get Data Lambda Function
     Value: !GetAtt ProvisionStadiumLocations.Arn
     Export:
       Name: !Sub '${AppName}-provision-stadium-locations-arn'
-  GetListOfStadiums:
+
+  ProvisionStadiumLocationsFunctionName:
+    Description: Name of the "provision-stadium-locations" function
+    Value: !Sub "${AppName}-provision-stadium-locations"
+    Export:
+      Name: !Sub '${AppName}-provision-stadium-locations-function-name'
+
+  GetListOfStadiumsArn:
     Description: ARN of Get Data Lambda Function
     Value: !GetAtt GetListOfStadiums.Arn
     Export:
       Name: !Sub '${AppName}-get-list-of-stadiums-arn'
-  GetCrimesForStadium:
+
+  GetCrimesForStadiumArn:
     Description: ARN of Get Data Lambda Function
     Value: !GetAtt GetCrimesForStadium.Arn
     Export:

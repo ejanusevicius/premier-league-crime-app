@@ -6,8 +6,8 @@ data "aws_cloudformation_export" "api_lambda_arn_cfn_exports" {
 }
 
 data "aws_cloudformation_export" "provisioning_lambda_name" {
-    # TODO: Implement code that will extract the exported lambda function name from the CloudFront stack.
-    # This will then be passed into the function invocation to populate the dynamoDB table.
+    depends_on = [aws_cloudformation_stack.premier_league_crime_api_sam_stack]
+    name = "${local.application_name}-provision-stadium-locations-function-name"
 }
 
 # Create API Gateway Trust Policy

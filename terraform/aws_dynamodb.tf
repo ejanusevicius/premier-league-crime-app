@@ -15,15 +15,14 @@ resource "aws_dynamodb_table" "stadium_location_table" {
     }
 }
 
-
 data "aws_lambda_invocation" "load_stadium_locations_to_table" {
-  function_name = aws_lambda_function.lambda_function_test.function_name
+  depends_on = [
+    aws_dynamodb_table.stadium_location_table,
+    aws_cloudformation_export.premier_league_crime_api_sam_stack
+  ]
 
+  function_name = aws_cloudformation_export.provisioning_lambda_name.value
   input = <<JSON
 {}
 JSON
-}
-
-output "result_entry" {
-  value = jsondecode(data.aws_lambda_invocation.example.result)["key1"]
 }
