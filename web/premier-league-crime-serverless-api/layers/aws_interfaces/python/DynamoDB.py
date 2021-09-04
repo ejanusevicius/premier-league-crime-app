@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import boto3
 from typing import List
+import os
 
 @dataclass
 class Location: # Type for the location dict
@@ -14,8 +15,9 @@ class Location: # Type for the location dict
 class DynamoDB:
 
     def __init__(self) -> None:
+        dynamodb_stadium_table_name = os.environ["DYNAMODB_STADIUM_TABLE_NAME"]
         self._dynamo_client = boto3.resource('dynamodb')
-        self._location_table = self._dynamo_client.Table("TABLE_NAME_GOES_HERE")
+        self._location_table = self._dynamo_client.Table(dynamodb_stadium_table_name)
 
     def write_locations_to_location_table(self, list_of_locations: List[Location]):
         with self._location_table.batch_writer() as batch:

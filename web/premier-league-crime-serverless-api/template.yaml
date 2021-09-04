@@ -11,6 +11,9 @@ Parameters:
   FootballApiKey:
     Type: String
     Description: API Key for the Football Data API.
+  StadiumTableName:
+    Type: String
+    Description: Name of the dynamoDB table.
 
     
 Globals:
@@ -18,6 +21,23 @@ Globals:
     Timeout: 30
 
 Resources:
+
+  CloudWatchAccessPolicy:
+    Type: AWS::IAM:Policy
+    Properties:
+      PolicyName: CloudWatch-Lambda-Access
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:DescribeLogGroups
+              - logs:DescribeLogStreams
+              - logs:PutLogEvents
+            Resource:
+              - '*'
 
   CloudWatchAccessRole:
     Type: AWS::IAM::Role
@@ -34,19 +54,7 @@ Resources:
               - sts:AssumeRole
       Path: '/'
       Policies:
-        - PolicyName: cloudwatch
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:DescribeLogGroups
-                  - logs:DescribeLogStreams
-                  - logs:PutLogEvents
-                Resource:
-                  - '*'
+        - !Ref CloudWatchAccessPolicy
 
   AWSInterfaces:
     Type: AWS::Serverless::LayerVersion
@@ -85,6 +93,13 @@ Resources:
         - !Ref ApiInterfaces
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
+      Policies:
+        - DynamoDBWritePolicy: 
+            TableName: !Ref StadiumTableName
+      Environment:
+        Variables: 
+          API_KEY: !Ref FootballApiKey
+          DYNAMODB_STADIUM_TABLE_NAME: !Ref StadiumTableName
 
   GetListOfStadiums:
     Type: AWS::Serverless::Function
@@ -100,6 +115,12 @@ Resources:
         - !Ref CodeUtilities
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
+      Policies:
+        - DynamoDBReadPolicy: 
+            TableName: !Ref StadiumTableName
+      Environment:
+        Variables: 
+          DYNAMODB_STADIUM_TABLE_NAME: !Ref StadiumTableName
 
   GetCrimesForStadium:
     Type: AWS::Serverless::Function
@@ -115,9 +136,6 @@ Resources:
         - !Ref CodeUtilities
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
-      Environment:
-        Variables: 
-          API_KEY: !Ref FootballApiKey
 
 
 Outputs:

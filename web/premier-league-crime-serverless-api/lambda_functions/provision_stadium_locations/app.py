@@ -9,7 +9,7 @@ def lambda_handler(event, context):
         This function is invoked by Terraform to load the location table in dynamoDB table.
         Data  fetched from the 3rd party APIs.
     """
-    
+
     fd_api = FootballDataApi()
     team_data = fd_api.get_premier_league_teams()
     
@@ -17,6 +17,8 @@ def lambda_handler(event, context):
 
     dynamodb = DynamoDB()
     dynamodb.write_locations_to_location_table(list_of_locations)
+
+    return generate_output_message(list_of_locations)
 
 
 def map_team_data_to_dynamodb_objects(list_of_teams):
@@ -54,5 +56,6 @@ def parse_postcode_from_address(address: str):
 
     return full_post_code
 
-
-
+def generate_output_message(list_of_locations):
+    number_of_locations = len(list_of_locations)
+    return f"{number_of_locations} stadium locations have been loaded successfully!"

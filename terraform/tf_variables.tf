@@ -44,3 +44,9 @@ variable "sam_bucket_name" {
     type = string
     default = "premier-league-crime-app-sam-template"
 }
+
+# Front-End
+variable "reactapp_bucket_name" {
+    type = string
+    default = "premier-league-crime-app-reactapp-bucket"
+}

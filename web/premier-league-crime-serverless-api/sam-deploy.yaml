@@ -10,10 +10,29 @@ Parameters:
   FootballApiKey:
     Type: String
     Description: API Key for the Football Data API.
+  StadiumTableName:
+    Type: String
+    Description: Name of the dynamoDB table.
 Globals:
   Function:
     Timeout: 30
 Resources:
+  CloudWatchAccessPolicy:
+    Type: AWS::IAM:Policy
+    Properties:
+      PolicyName: CloudWatch-Lambda-Access
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:DescribeLogGroups
+          - logs:DescribeLogStreams
+          - logs:PutLogEvents
+          Resource:
+          - '*'
   CloudWatchAccessRole:
     Type: AWS::IAM::Role
     Properties:
@@ -30,24 +49,12 @@ Resources:
           - sts:AssumeRole
       Path: /
       Policies:
-      - PolicyName: cloudwatch
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Action:
-            - logs:CreateLogGroup
-            - logs:CreateLogStream
-            - logs:DescribeLogGroups
-            - logs:DescribeLogStreams
-            - logs:PutLogEvents
-            Resource:
-            - '*'
+      - Ref: CloudWatchAccessPolicy
   AWSInterfaces:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: AWS_Service_Interfaces
-      ContentUri: s3://premier-league-crime-app-sam-template/aa5d66db8fc6adb6f48b397df81ee4a3
+      ContentUri: s3://premier-league-crime-app-sam-template/c1745748cbfc3ca33d60837344b8629f
       CompatibleRuntimes:
       - python3.8
   ApiInterfaces:
@@ -69,7 +76,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-provision-stadium-locations
-      CodeUri: s3://premier-league-crime-app-sam-template/12bab7a65ac20403d536dd476bc979e1
+      CodeUri: s3://premier-league-crime-app-sam-template/91dc7a8e498e316e9b31e6cd080b227f
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 300
@@ -78,6 +85,16 @@ Resources:
       - Ref: ApiInterfaces
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
+      Policies:
+      - DynamoDBWritePolicy:
+          TableName:
+            Ref: StadiumTableName
+      Environment:
+        Variables:
+          API_KEY:
+            Ref: FootballApiKey
+          DYNAMODB_STADIUM_TABLE_NAME:
+            Ref: StadiumTableName
   GetListOfStadiums:
     Type: AWS::Serverless::Function
     Properties:
@@ -93,12 +110,20 @@ Resources:
       - Ref: CodeUtilities
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName:
+            Ref: StadiumTableName
+      Environment:
+        Variables:
+          DYNAMODB_STADIUM_TABLE_NAME:
+            Ref: StadiumTableName
   GetCrimesForStadium:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-get-crimes-for-stadium
-      CodeUri: s3://premier-league-crime-app-sam-template/99740f97c00cb89565649c10f0053f7e
+      CodeUri: s3://premier-league-crime-app-sam-template/6039561d59a29af26f388a9353f86195
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 30
@@ -108,12 +133,8 @@ Resources:
       - Ref: CodeUtilities
       Role:
         Fn::GetAtt: CloudWatchAccessRole.Arn
-      Environment:
-        Variables:
-          API_KEY:
-            Ref: FootballApiKey
 Outputs:
-  ProvisionStadiumLocations:
+  ProvisionStadiumLocationsArn:
     Description: ARN of Get Data Lambda Function
     Value:
       Fn::GetAtt:
@@ -122,7 +143,14 @@ Outputs:
     Export:
       Name:
         Fn::Sub: ${AppName}-provision-stadium-locations-arn
-  GetListOfStadiums:
+  ProvisionStadiumLocationsFunctionName:
+    Description: Name of the "provision-stadium-locations" function
+    Value:
+      Fn::Sub: ${AppName}-provision-stadium-locations
+    Export:
+      Name:
+        Fn::Sub: ${AppName}-provision-stadium-locations-function-name
+  GetListOfStadiumsArn:
     Description: ARN of Get Data Lambda Function
     Value:
       Fn::GetAtt:
@@ -131,7 +159,7 @@ Outputs:
     Export:
       Name:
         Fn::Sub: ${AppName}-get-list-of-stadiums-arn
-  GetCrimesForStadium:
+  GetCrimesForStadiumArn:
     Description: ARN of Get Data Lambda Function
     Value:
       Fn::GetAtt:
