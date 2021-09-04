@@ -6,7 +6,7 @@ def lambda_handler(event, context):
     dynamodb = DynamoDB()
     list_of_locations = dynamodb.get_all_locations_from_location_table()
 
-    return ResponseUtilities(
+    return ResponseUtilities.create_response_object(
         ResponseObject(
             status_code=200,
             message="success",

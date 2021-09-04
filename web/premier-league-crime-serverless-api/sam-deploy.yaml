@@ -17,22 +17,6 @@ Globals:
   Function:
     Timeout: 30
 Resources:
-  CloudWatchAccessPolicy:
-    Type: AWS::IAM:Policy
-    Properties:
-      PolicyName: CloudWatch-Lambda-Access
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - logs:CreateLogGroup
-          - logs:CreateLogStream
-          - logs:DescribeLogGroups
-          - logs:DescribeLogStreams
-          - logs:PutLogEvents
-          Resource:
-          - '*'
   CloudWatchAccessRole:
     Type: AWS::IAM::Role
     Properties:
@@ -49,12 +33,39 @@ Resources:
           - sts:AssumeRole
       Path: /
       Policies:
-      - Ref: CloudWatchAccessPolicy
+      - PolicyName: cloudwatch-access
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:DescribeLogGroups
+            - logs:DescribeLogStreams
+            - logs:PutLogEvents
+            Resource:
+            - '*'
+      - PolicyName: dynamodb-access
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:BatchGetItem
+            - dynamodb:GetItem
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWriteItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            Resource:
+            - Fn::Sub: arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${StadiumTableName}
   AWSInterfaces:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: AWS_Service_Interfaces
-      ContentUri: s3://premier-league-crime-app-sam-template/c1745748cbfc3ca33d60837344b8629f
+      ContentUri: s3://premier-league-crime-app-sam-template/69219142a083875a571df30b36c87b76
       CompatibleRuntimes:
       - python3.8
   ApiInterfaces:
@@ -76,7 +87,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-provision-stadium-locations
-      CodeUri: s3://premier-league-crime-app-sam-template/91dc7a8e498e316e9b31e6cd080b227f
+      CodeUri: s3://premier-league-crime-app-sam-template/9d1bd134b14e77a453171c93506b6356
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 300
@@ -100,7 +111,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-get-list-of-stadiums
-      CodeUri: s3://premier-league-crime-app-sam-template/bea1b9bb8a045791073bfd37669d328c
+      CodeUri: s3://premier-league-crime-app-sam-template/ac1314813a48374136cef2d70ef7a637
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 10

@@ -5,7 +5,7 @@ import os
 
 @dataclass
 class Location: # Type for the location dict
-    id: int
+    id: str
     crestUrl: str
     fullAddress: str
     postCode: str

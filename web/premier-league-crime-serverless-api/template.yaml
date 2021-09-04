@@ -21,24 +21,7 @@ Globals:
     Timeout: 30
 
 Resources:
-
-  CloudWatchAccessPolicy:
-    Type: AWS::IAM:Policy
-    Properties:
-      PolicyName: CloudWatch-Lambda-Access
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - logs:CreateLogGroup
-              - logs:CreateLogStream
-              - logs:DescribeLogGroups
-              - logs:DescribeLogStreams
-              - logs:PutLogEvents
-            Resource:
-              - '*'
-
+  
   CloudWatchAccessRole:
     Type: AWS::IAM::Role
     Properties:
@@ -54,7 +37,34 @@ Resources:
               - sts:AssumeRole
       Path: '/'
       Policies:
-        - !Ref CloudWatchAccessPolicy
+        - PolicyName: cloudwatch-access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                  - logs:PutLogEvents
+                Resource:
+                  - '*'
+        - PolicyName: dynamodb-access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:BatchGetItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:BatchWriteItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource:
+                  - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${StadiumTableName}'
 
   AWSInterfaces:
     Type: AWS::Serverless::LayerVersion
