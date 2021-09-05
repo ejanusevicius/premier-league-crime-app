@@ -8,7 +8,7 @@ function reducer(state = initialState, action: ReduxAction) {
     switch(type) {
         case actions.SET_CRIMES: return updateState(state, { crimes: payload });
         case actions.SELECT_CRIME: return updateState(state, { selectedCrime: payload });
-        case actions.SELECT_LOCATION: return updateState(state, { selectedLocation: payload });
+        case actions.SELECT_LOCATION: return updateState(state, { selectedStadiumLocation: payload });
         case actions.SET_LOCATIONS: return updateState(state, { stadiumLocations: payload });
         default: return initialState;
     }

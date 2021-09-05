@@ -13,6 +13,7 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "axios": "^0.21.2",
+    "google-map-react": "^2.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-maps": "^9.4.5",
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/google-map-react": "^2.1.2",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.36",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"

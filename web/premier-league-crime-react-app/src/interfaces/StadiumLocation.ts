@@ -1,4 +1,4 @@
-export interface Location {
+export interface StadiumLocation {
     "postCode": string
     "longitude": number
     "crestUrl": string,

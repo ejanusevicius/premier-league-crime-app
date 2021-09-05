@@ -1,7 +1,7 @@
-import { Location } from "../interfaces/Location";
+import { StadiumLocation } from "../interfaces/StadiumLocation";
 
 type PropTypes = {
-    location: Location,
+    location: StadiumLocation,
     onClick: any,
     className?: string
 }

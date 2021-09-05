@@ -1,5 +1,5 @@
 import { Crime } from "../interfaces/Crime";
-import { Location } from "../interfaces/Location";
+import { StadiumLocation } from "../interfaces/StadiumLocation";
 
 const actions = {
     SET_LOCATIONS: "SET_LOCATIONS",
@@ -8,14 +8,14 @@ const actions = {
     SELECT_CRIME: "SELECT_CRIME"
 };
 
-export function setLocations(payload: Location[]) {
+export function setLocations(payload: StadiumLocation[]) {
     return {
         type: actions.SET_LOCATIONS,
         payload
     }
 }
 
-export function selectLocation(payload: Location) {
+export function selectLocation(payload: StadiumLocation) {
     return {
         type: actions.SELECT_LOCATION,
         payload

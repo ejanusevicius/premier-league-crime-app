@@ -26,7 +26,8 @@ function CrimeCard({
                     </span>
                 </div>
 
-                    <button className="text-purple-600 border-purple-600 border hover:bg-purple-600 hover:text-white flex items-center justify-center transition-colors duration-150 text-xs font-semibold text-white rounded-xl px-2 py-0.5 cursor-pointer">
+                    <button onClick={onClick}
+                    className="text-purple-600 border-purple-600 border hover:bg-purple-600 hover:text-white flex items-center justify-center transition-colors duration-150 text-xs font-semibold text-white rounded-xl px-2 py-0.5 cursor-pointer">
                         <FiEye className="mr-1 inline" />Inspect
                     </button>
 

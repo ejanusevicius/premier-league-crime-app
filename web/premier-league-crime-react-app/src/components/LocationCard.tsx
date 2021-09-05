@@ -1,8 +1,8 @@
-import { Location } from "../interfaces/Location";
+import { StadiumLocation } from "../interfaces/StadiumLocation";
 import { FiDownload } from 'react-icons/fi';
 
 type PropTypes = {
-    location: Location,
+    location: StadiumLocation,
     onClick: any,
     className?: string
 }

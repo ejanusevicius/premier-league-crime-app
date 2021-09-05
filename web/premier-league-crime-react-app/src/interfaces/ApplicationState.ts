@@ -1,9 +1,9 @@
 import { Crime } from './Crime';
-import { Location } from './Location';
+import { StadiumLocation } from './StadiumLocation';
 
 export interface ApplicationState {
-    stadiumLocations: Location[],
-    selectedStadiumLocation: Location | null,
+    stadiumLocations: StadiumLocation[],
+    selectedStadiumLocation: StadiumLocation | null,
     crimes: Crime[],
     selectedCrime: Crime | null
 };
