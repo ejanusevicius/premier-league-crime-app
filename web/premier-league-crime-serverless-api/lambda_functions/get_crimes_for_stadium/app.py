@@ -94,26 +94,3 @@ def parse_location(location):
             "longitude": location.get("longitude", None)
         }
     return location_dict
-
-
-    # {
-    #     "category": "criminal-damage-arson",
-    #     "location_type": "Force",
-    #     "location": {
-    #         "latitude": "53.777773",
-    #         "street": {
-    #             "id": 1292236,
-    #             "name": "On or near Sports/recreation Area"
-    #         },
-    #         "longitude": "-1.572163"
-    #     },
-    #     "context": "",
-    #     "outcome_status": {
-    #         "category": "Investigation complete; no suspect identified",
-    #         "date": "2020-11"
-    #     },
-    #     "persistent_id": "463762fa61cfa4b2e37051495dfa163dda21cc7579f6d243d5d8a0c6e22e6eef",
-    #     "id": 88188512,
-    #     "location_subtype": "",
-    #     "month": "2020-11"
-    # }
