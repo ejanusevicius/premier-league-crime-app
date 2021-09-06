@@ -5,6 +5,7 @@ web/premier-league-crime-react-app/.env
 
 # Back-End
 web/premier-league-crime-serverless-api/.aws-sam
+web/premier-league-crime-serverless-api/sam-deploy.yaml
 
 # Terraform
 terraform/.terraform

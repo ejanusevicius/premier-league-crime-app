@@ -87,7 +87,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-provision-stadium-locations
-      CodeUri: s3://premier-league-crime-app-sam-template/e5327dbde646c645f1ea806296a5a897
+      CodeUri: s3://premier-league-crime-app-sam-template/dbe3a1e1412b65f60d44f966dc8d63eb
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 300
