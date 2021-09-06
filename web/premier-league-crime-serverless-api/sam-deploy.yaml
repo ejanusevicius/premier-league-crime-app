@@ -65,7 +65,7 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: AWS_Service_Interfaces
-      ContentUri: s3://premier-league-crime-app-sam-template/69219142a083875a571df30b36c87b76
+      ContentUri: s3://premier-league-crime-app-sam-template/62f6d8c93238fc5e4298f8b54f901569
       CompatibleRuntimes:
       - python3.8
   ApiInterfaces:
@@ -87,7 +87,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-provision-stadium-locations
-      CodeUri: s3://premier-league-crime-app-sam-template/9d1bd134b14e77a453171c93506b6356
+      CodeUri: s3://premier-league-crime-app-sam-template/e5327dbde646c645f1ea806296a5a897
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 300
@@ -134,7 +134,7 @@ Resources:
     Properties:
       FunctionName:
         Fn::Sub: ${AppName}-get-crimes-for-stadium
-      CodeUri: s3://premier-league-crime-app-sam-template/6039561d59a29af26f388a9353f86195
+      CodeUri: s3://premier-league-crime-app-sam-template/74b2ee92c7f3f08251662912ab441d01
       Handler: app.lambda_handler
       Runtime: python3.8
       Timeout: 30

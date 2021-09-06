@@ -11,6 +11,7 @@ class Location: # Type for the location dict
     postCode: str
     longitude: str
     latitude: str
+    teamName: str
 
 class DynamoDB:
 

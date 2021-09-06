@@ -7,8 +7,7 @@ import { MapUtilities } from "../classes/MapUtilities";
 import { CoordinateSet } from "../interfaces/CoordinateSet";
 import { StadiumLocation } from "../interfaces/StadiumLocation";
 import { ApplicationState } from "../interfaces/ApplicationState";
-
-const GOOGLE_MAPS_API_KEY = "";
+import { TerraformParameterParser } from "../classes/TerraformParameterParser";
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
@@ -49,7 +48,7 @@ function Map({
     <div className="h-full w-3/5">
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals={true}
-        bootstrapURLKeys={{ key :GOOGLE_MAPS_API_KEY }}
+        bootstrapURLKeys={{ key : TerraformParameterParser.getGoogleMapsApiKey() }}
         defaultZoom={MapConstants.INITIAL_MAP_ZOOM}
         center={coordinates as never}
         zoom={zoomValue}>

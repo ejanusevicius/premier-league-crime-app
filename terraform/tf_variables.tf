@@ -50,3 +50,7 @@ variable "reactapp_bucket_name" {
     type = string
     default = "premier-league-crime-app-reactapp-bucket"
 }
+
+variable "google_maps_api_key" {
+    type = string
+}

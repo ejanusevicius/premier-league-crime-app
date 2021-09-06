@@ -1,6 +1,7 @@
 # Front-End
 web/premier-league-crime-react-app/build
 web/premier-league-crime-react-app/node_modules
+web/premier-league-crime-react-app/.env
 
 # Back-End
 web/premier-league-crime-serverless-api/.aws-sam

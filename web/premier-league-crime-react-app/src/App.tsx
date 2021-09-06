@@ -73,7 +73,6 @@ function App({
 
   async function selectStadiumLocationAndGetCrimes(location: StadiumLocation) {
     if (differentLocationIsClicked(location) && locationCrimesAreNotCurrentlyLoading()) {
-      console.log('spam!')
       setCrimesForStadiumAreLoading(true);
       resetCurrentSelectedLocationAndCrime();
 
@@ -120,7 +119,7 @@ function App({
 
             <div className="w-full h-1/2 pt-20 border-b border-gray-300 flex">
 
-              <div className="h-full w-2/3 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+              <div className="h-full w-3/5 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
                   {locationCards}
               </div>
 

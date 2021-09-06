@@ -18,8 +18,6 @@ resource "aws_s3_bucket" "reactapp_s3_bucket" {
     ]
 }
 EOF
-#   policy = file("policy.json")
-
 
   website {
     index_document = "index.html"
@@ -36,4 +34,24 @@ EOF
 }]
 EOF
   }
+}
+
+resource "null_resource" "build_react_app" {
+    depends_on = [
+        aws_s3_bucket.reactapp_s3_bucket,
+        aws_api_gateway_deployment.employees_rest_api_deployment,
+    ]
+    provisioner "local-exec" {
+        command =  "cd .. && cd web && cd premier-league-crime-react-app && echo REACT_APP_TERRAFORM_PARAMS=${var.google_maps_api_key}_SPLITPARSEKEY_${aws_api_gateway_deployment.employees_rest_api_deployment.invoke_url} > .env && npm run build"
+    }
+}
+
+resource "null_resource" "upload_reactapp_to_s3_bucket" {
+    depends_on = [
+        aws_s3_bucket.reactapp_s3_bucket,
+        null_resource.build_react_app
+    ]
+    provisioner "local-exec" {
+        command = "cd .. && cd web && cd premier-league-crime-react-app && aws s3 sync build s3://${var.reactapp_bucket_name}/"
+    }
 }
