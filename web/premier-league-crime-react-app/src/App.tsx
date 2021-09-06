@@ -1,38 +1,34 @@
 import { useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
-
-import Header from './components/Header';
-import Container from './components/Container';
 import { ApiEndpoints } from './classes/ApiEndpoints';
 import { StadiumLocation } from './interfaces/StadiumLocation';
 import { selectCrime, selectLocation, setCrimes, setLocations } from './redux/actions';
 import { connect, ConnectedProps } from 'react-redux';
-import LocationButton from './components/LocationButton';
 import { ApplicationState } from './interfaces/ApplicationState';
 import LocationCard from './components/LocationCard';
 import Map from './components/Map';
 import PremierLeagueLogoSvg from './components/PremierLeagueLogoSvg';
 import { Crime } from './interfaces/Crime';
 import CrimeCard from './components/CrimeCard';
-import Spinner from './components/Spinner';
 import { useHttp } from './hooks/useHttp';
 import LoadingBoundary from './components/LoadingBoundary';
 import Placeholder from './components/Placeholder';
 import { FiEye } from 'react-icons/fi';
+import CrimeInsight from './components/CrimeInsight';
 
 const mapStateToProps = (state: ApplicationState) => {
-  console.log(state);
   return {
     stadiumLocations: state.stadiumLocations,
-    crimes: state.crimes
+    crimes: state.crimes,
+    selectedStadiumLocation: state.selectedStadiumLocation,
+    selectedCrime: state.selectedCrime
   }
 }
 const mapDispatchToProps = {
   setStadiumLocations: (locations: StadiumLocation[]) => setLocations(locations),
   setCrimes: (crimes: Crime[]) => setCrimes(crimes),
-  selectCrime: (crime: Crime) => selectCrime(crime),
-  selectLocation: (location: StadiumLocation) => selectLocation(location)
+  selectCrime: (crime: Crime | null) => selectCrime(crime),
+  selectLocation: (location: StadiumLocation | null) => selectLocation(location)
 }
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
@@ -44,7 +40,9 @@ function App({
   setCrimes,
   crimes,
   selectCrime,
-  selectLocation
+  selectLocation,
+  selectedStadiumLocation,
+  selectedCrime
 }: PropTypes) {
   
   const { 
@@ -66,13 +64,20 @@ function App({
     setStadiumLocationsAreLoading(false);
   }
 
+
   async function selectStadiumLocationAndGetCrimes(location: StadiumLocation) {
+    resetCurrentSelectedLocationAndCrime();
     setCrimesForStadiumAreLoading(true);
     const { latitude, longitude } = location;
     const { crimes } = await getRequestForCrimes(ApiEndpoints.getCrimesForStadiumCoorindates(latitude, longitude));
     setCrimes(crimes);
     selectLocation(location);
     setCrimesForStadiumAreLoading(false)
+  }
+
+  async function resetCurrentSelectedLocationAndCrime() {
+    selectLocation(null);
+    selectCrime(null);
   }
   
   useEffect(() => {
@@ -84,7 +89,6 @@ function App({
   }, [stadiumLocations]);
 
   const locationCards = stadiumLocations.map(location => <LocationCard location={location} onClick={() => selectStadiumLocationAndGetCrimes(location)}/>)
-
   const crimeCards = crimes.map(crime => <CrimeCard crime={crime} onClick={() => selectCrime(crime)} />)
 
   function crimesExist() {
@@ -103,11 +107,11 @@ function App({
 
           <div className="w-full h-1/2 pt-20 border-b border-gray-300 flex">
 
-            <div className="h-full w-1/2 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+            <div className="h-full w-2/3 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
                 {locationCards}
             </div>
 
-            <div className="h-full w-1/2 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+            <div className="h-full w-2/5 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 border-l border-gray-300">
               <LoadingBoundary loading={crimesForStadiumAreLoading}>
 
                 {
@@ -125,9 +129,19 @@ function App({
           </div>
 
           <div className="w-full h-1/2">
-            <Placeholder text="Inspect a crime">
-              <FiEye />
-            </Placeholder>
+
+            {
+                selectedStadiumLocation && selectedCrime ?
+
+                <CrimeInsight />
+
+                :
+
+                <Placeholder text="Inspect a crime">
+                  <FiEye />
+                </Placeholder>
+            }
+
           </div>
           
           </LoadingBoundary>

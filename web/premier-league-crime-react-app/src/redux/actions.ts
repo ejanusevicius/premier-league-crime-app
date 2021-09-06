@@ -15,7 +15,7 @@ export function setLocations(payload: StadiumLocation[]) {
     }
 }
 
-export function selectLocation(payload: StadiumLocation) {
+export function selectLocation(payload: StadiumLocation | null) {
     return {
         type: actions.SELECT_LOCATION,
         payload
@@ -29,7 +29,7 @@ export function setCrimes(payload: Crime[]) {
     }
 }
 
-export function selectCrime(payload: Crime) {
+export function selectCrime(payload: Crime | null) {
     return {
         type: actions.SELECT_CRIME,
         payload
