@@ -1,7 +1,8 @@
-import { StadiumLocation } from "../interfaces/StadiumLocation";
-import { FiDownload } from 'react-icons/fi';
-import { ApplicationState } from "../interfaces/ApplicationState";
 import { connect, ConnectedProps } from 'react-redux';
+import { FiDownload } from 'react-icons/fi';
+
+import { StadiumLocation } from "../interfaces/StadiumLocation";
+import { ApplicationState } from "../interfaces/ApplicationState";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {
@@ -16,7 +17,8 @@ type PropTypes = {
     onClick: any,
     className?: string
 } & ReduxProps;
-function LocationButton({
+
+function LocationCard({
     location,
     onClick = undefined,
     className: userClasses = "",
@@ -38,7 +40,7 @@ function LocationButton({
 
                 <div className="flex-1 pr-2">
                     <span className="block text-2xs xl:text-sm 2xl:text-base font-medium">
-                        Chelsea F.C
+                        {location.teamName}
                     </span>
                     <span className="block text-4xs xl:text-2xs 2xl:text-xs font-semibold">
                         {location.fullAddress}
@@ -49,10 +51,9 @@ function LocationButton({
                     className="font-semibold text-white rounded-xl px-1 2xl:px-2 py-0.5 cursor-pointer text-3xs xl:text-2xs 2xl:text-xs border flex items-center justify-center border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white transition-colors duration-300">
                         <FiDownload className="mr-1 inline" />Load Crimes
                     </button>
-
             </div>
         </div>
     );
 };
 
-export default connector(LocationButton);
+export default connector(LocationCard);

@@ -1,7 +1,8 @@
 import { FiEye } from "react-icons/fi";
-import { Crime } from "../interfaces/Crime";
 import { connect, ConnectedProps } from 'react-redux';
+
 import { ApplicationState } from "../interfaces/ApplicationState";
+import { Crime } from "../interfaces/Crime";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {
@@ -20,9 +21,14 @@ function CrimeCard({
     crime,
     selectedCrime
 }: PropTypes) {
+
     let containerClasses = "w-full border-b py-2 px-5 flex";
-    if (selectedCrime === crime) {
+    if (selectedCrimeIsRendered()) {
         containerClasses = [containerClasses, "bg-gray-200"].join(" ");
+    }
+
+    function selectedCrimeIsRendered() {
+        return crime === selectedCrime;
     }
 
     return (

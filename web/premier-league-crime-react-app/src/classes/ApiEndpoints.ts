@@ -1,4 +1,3 @@
-
 const API_KEY = process.env['API_ID'] || "b3mhp2e47h";
 export class ApiEndpoints {
     private static API_PATH = `https://${API_KEY}.execute-api.eu-west-2.amazonaws.com/v1`;

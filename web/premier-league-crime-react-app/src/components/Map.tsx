@@ -1,13 +1,12 @@
-import { ApplicationState } from "../interfaces/ApplicationState";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect, ConnectedProps } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
+
 import { MapConstants } from "../classes/MapConstants";
 import { MapUtilities } from "../classes/MapUtilities";
 import { CoordinateSet } from "../interfaces/CoordinateSet";
 import { StadiumLocation } from "../interfaces/StadiumLocation";
-import { GiMagnifyingGlass } from 'react-icons/gi';
+import { ApplicationState } from "../interfaces/ApplicationState";
 
 const GOOGLE_MAPS_API_KEY = "";
 
@@ -18,7 +17,6 @@ const mapStateToProps = (state: ApplicationState) => {
   }
 }
 const connector = connect(mapStateToProps);
-
 type PropTypes = ConnectedProps<typeof connector>;
 
 function Map({
@@ -32,7 +30,7 @@ function Map({
   function focusLocation(location: StadiumLocation) {
       const { latitude, longitude } = location;
       setCoordinates(MapUtilities.createCoordinateArray(latitude, longitude))
-      setZoomValue(MapConstants.MAP_ZOOM_FOR_STADIUM);
+      setZoomValue(prevState => MapUtilities.getFocusedStadiumZoom(prevState));
   }
 
   useEffect(() => {
@@ -40,8 +38,6 @@ function Map({
       focusLocation(selectedStadiumLocation);
     }
   }, [selectedStadiumLocation]);
-
-  
 
   type MarkerPropTypes = { lat: Number, lng: Number };
   const Marker = ({ lat, lng }: MarkerPropTypes) => (

@@ -1,20 +1,23 @@
 import { useEffect } from 'react';
-import './App.css';
+import { connect, ConnectedProps } from 'react-redux';
+import { selectCrime, selectLocation, setCrimes, setLocations } from './redux/actions';
+import { FiEye } from 'react-icons/fi';
+
 import { ApiEndpoints } from './classes/ApiEndpoints';
 import { StadiumLocation } from './interfaces/StadiumLocation';
-import { selectCrime, selectLocation, setCrimes, setLocations } from './redux/actions';
-import { connect, ConnectedProps } from 'react-redux';
+import { Crime } from './interfaces/Crime';
 import { ApplicationState } from './interfaces/ApplicationState';
+
 import LocationCard from './components/LocationCard';
 import Map from './components/Map';
 import PremierLeagueLogoSvg from './components/PremierLeagueLogoSvg';
-import { Crime } from './interfaces/Crime';
 import CrimeCard from './components/CrimeCard';
-import { useHttp } from './hooks/useHttp';
 import LoadingBoundary from './components/LoadingBoundary';
 import Placeholder from './components/Placeholder';
-import { FiEye } from 'react-icons/fi';
 import CrimeInsight from './components/CrimeInsight';
+
+import { useHttp } from './hooks/useHttp';
+import './App.css';
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
@@ -57,6 +60,10 @@ function App({
     setLoading: setCrimesForStadiumAreLoading
   } = useHttp();
 
+  useEffect(() => {
+    loadStadiumLocations();
+  }, []);
+
   async function loadStadiumLocations() {
     setStadiumLocationsAreLoading(true);
     const stadiumLocations = await getRequestForStadiumLocations(ApiEndpoints.geStadiumLocations);
@@ -64,36 +71,42 @@ function App({
     setStadiumLocationsAreLoading(false);
   }
 
-
   async function selectStadiumLocationAndGetCrimes(location: StadiumLocation) {
-    resetCurrentSelectedLocationAndCrime();
-    setCrimesForStadiumAreLoading(true);
-    const { latitude, longitude } = location;
-    const { crimes } = await getRequestForCrimes(ApiEndpoints.getCrimesForStadiumCoorindates(latitude, longitude));
-    setCrimes(crimes);
-    selectLocation(location);
-    setCrimesForStadiumAreLoading(false)
+    if (differentLocationIsClicked(location) && locationCrimesAreNotCurrentlyLoading()) {
+      console.log('spam!')
+      setCrimesForStadiumAreLoading(true);
+      resetCurrentSelectedLocationAndCrime();
+
+      const { latitude, longitude } = location;
+      const { crimes } = await getRequestForCrimes(ApiEndpoints.getCrimesForStadiumCoorindates(latitude, longitude));
+
+      setCrimes(crimes);
+      selectLocation(location);
+      setCrimesForStadiumAreLoading(false);
+
+    }
   }
 
   async function resetCurrentSelectedLocationAndCrime() {
     selectLocation(null);
     selectCrime(null);
   }
-  
-  useEffect(() => {
-    loadStadiumLocations();
-  }, []);
 
-  useEffect(() => {
-    console.log(stadiumLocations);
-  }, [stadiumLocations]);
+  function locationCrimesAreNotCurrentlyLoading() {
+    return crimesForStadiumAreLoading === false;
+  }
+
+  function differentLocationIsClicked(currentStadium: StadiumLocation) {
+    return currentStadium?.id !== selectedStadiumLocation?.id;
+  }
+  
+  function crimesExist() {
+    return crimeCards?.length > 0;
+  }
 
   const locationCards = stadiumLocations.map(location => <LocationCard location={location} onClick={() => selectStadiumLocationAndGetCrimes(location)}/>)
   const crimeCards = crimes.map(crime => <CrimeCard crime={crime} onClick={() => selectCrime(crime)} />)
 
-  function crimesExist() {
-    return crimeCards?.length > 0;
-  }
   return (
     <main className="w-full h-screen flex">
 
@@ -105,58 +118,45 @@ function App({
               <PremierLeagueLogoSvg />
             </div>
 
-          <div className="w-full h-1/2 pt-20 border-b border-gray-300 flex">
+            <div className="w-full h-1/2 pt-20 border-b border-gray-300 flex">
 
-            <div className="h-full w-2/3 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-                {locationCards}
+              <div className="h-full w-2/3 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                  {locationCards}
+              </div>
+
+              <div className="h-full w-2/5 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 border-l border-gray-300">
+                <LoadingBoundary loading={crimesForStadiumAreLoading}>
+
+                  {
+                  crimesExist() ? 
+                  crimeCards : 
+                  (
+                  <Placeholder text="Select a stadium">
+                      <FiEye />
+                  </Placeholder>
+                  )
+                  }
+                </LoadingBoundary>
+              </div>
+
             </div>
 
-            <div className="h-full w-2/5 overflow-y-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 border-l border-gray-300">
-              <LoadingBoundary loading={crimesForStadiumAreLoading}>
-
-                {
-                crimesExist() ? 
-                crimeCards : 
-                (
-                  <Placeholder text="Select a stadium">
+            <div className="w-full h-1/2">
+              {
+                  selectedStadiumLocation && selectedCrime ?
+                  <CrimeInsight />
+                  :
+                  <Placeholder text="Inspect a crime">
                     <FiEye />
                   </Placeholder>
-                )
-                }
-              </LoadingBoundary>
+              }
             </div>
-
-          </div>
-
-          <div className="w-full h-1/2">
-
-            {
-                selectedStadiumLocation && selectedCrime ?
-
-                <CrimeInsight />
-
-                :
-
-                <Placeholder text="Inspect a crime">
-                  <FiEye />
-                </Placeholder>
-            }
-
-          </div>
           
           </LoadingBoundary>
 
         </div>
         
-
         <Map />
-
-
-      {/* <div className="fixed bottom-0 left-0 bg-gray-800 h-12 w-full" /> */}
-
-      
-
-
 
     </main>
   );

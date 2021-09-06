@@ -1,7 +1,7 @@
-import { FiCalendar, FiFile, FiZoomIn } from 'react-icons/fi';
 import { connect, ConnectedProps } from 'react-redux';
-import { ApplicationState } from "../interfaces/ApplicationState";
+import { FiCalendar, FiFile } from 'react-icons/fi';
 import { AiOutlineQuestion } from 'react-icons/ai';
+import { ApplicationState } from "../interfaces/ApplicationState";
 
 const mapStateToProps = (state: ApplicationState) => {
     return {
@@ -45,7 +45,7 @@ function CrimeInsight({ selectedStadiumLocation, selectedCrime, crimes }: ReduxP
 
             <div className="flex flex-col items-center justify-center border-b border-gray-200 pb-1 2xl:pb-2">
                 <img className="w-auto h-16 2xl:h-20" src={selectedStadiumLocation?.crestUrl} alt="Team Crest" />
-                <p className="text-lg 2xl:text-xl font-medium">Chelsea F.C</p>
+                <p className="text-lg 2xl:text-xl font-medium">{selectedStadiumLocation?.teamName}</p>
                 <p className="text-2xs 2xl:text-xs font-semibold">({selectedStadiumLocation?.fullAddress})</p>
                 <p className="mt-0.5 text-2xs 2xl:text-xs font-medium">
                     A total of
