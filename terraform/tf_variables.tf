@@ -48,7 +48,7 @@ variable "sam_bucket_name" {
 # Front-End
 variable "reactapp_bucket_name" {
     type = string
-    default = "premier-league-crime-app-reactapp-bucket"
+    # default = "premier-league-crime-app-reactapp-bucket"
 }
 
 variable "google_maps_api_key" {
